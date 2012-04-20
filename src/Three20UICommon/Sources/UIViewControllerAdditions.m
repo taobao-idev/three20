@@ -154,7 +154,8 @@ TT_FIX_CATEGORY_BUG(UIViewControllerAdditions)
   if (nil != parent) {
     return parent;
 
-  } else if ([self respondsToSelector:@selector(presentingViewController)]) {
+  } else if ([self respondsToSelector:@selector(presentingViewController)] && 
+             [self presentingViewController]) {
     return [self presentingViewController];
 
   } else {
