@@ -77,13 +77,26 @@ TT_FIX_CATEGORY_BUG(NSStringAdditions)
     NSString* pairString = nil;
     [scanner scanUpToCharactersFromSet:delimiterSet intoString:&pairString];
     [scanner scanCharactersFromSet:delimiterSet intoString:NULL];
-    NSArray* kvPair = [pairString componentsSeparatedByString:@"="];
+//    NSArray* kvPair = [pairString componentsSeparatedByString:@"="]; // modify by Tim Cao 2012/08/14, custom separator
+      NSMutableArray* kvPair = [NSMutableArray array];
+      int equalSignPosition = [pairString rangeOfString:@"="].location;
+      if (equalSignPosition == NSNotFound) {
+          [kvPair addObject:pairString];
+          
+      } else {
+          [kvPair addObject:[pairString substringToIndex:equalSignPosition]];
+          if (equalSignPosition != pairString.length-1)
+              [kvPair addObject:[pairString substringFromIndex:equalSignPosition+1]];
+      }
     if (kvPair.count == 2) {
       NSString* key = [[kvPair objectAtIndex:0]
                        stringByReplacingPercentEscapesUsingEncoding:encoding];
       NSString* value = [[kvPair objectAtIndex:1]
                          stringByReplacingPercentEscapesUsingEncoding:encoding];
-      [pairs setObject:value forKey:key];
+      if (value) {
+        // add by Tim Cao 2012/08/14, avoid nil value(wrong encoding) to be added to dictionary
+        [pairs setObject:value forKey:key];
+      }
     }
   }
 
@@ -99,7 +112,17 @@ TT_FIX_CATEGORY_BUG(NSStringAdditions)
     NSString* pairString = nil;
     [scanner scanUpToCharactersFromSet:delimiterSet intoString:&pairString];
     [scanner scanCharactersFromSet:delimiterSet intoString:NULL];
-    NSArray* kvPair = [pairString componentsSeparatedByString:@"="];
+//    NSArray* kvPair = [pairString componentsSeparatedByString:@"="]; // modify by Tim Cao 2012/08/14, custom separator
+      NSMutableArray* kvPair = [NSMutableArray array];
+      int equalSignPosition = [pairString rangeOfString:@"="].location;
+      if (equalSignPosition == NSNotFound) {
+          [kvPair addObject:pairString];
+          
+      } else {
+          [kvPair addObject:[pairString substringToIndex:equalSignPosition]];
+          if (equalSignPosition != pairString.length-1)
+          [kvPair addObject:[pairString substringFromIndex:equalSignPosition+1]];
+      }
     if (kvPair.count == 1 || kvPair.count == 2) {
       NSString* key = [[kvPair objectAtIndex:0]
                        stringByReplacingPercentEscapesUsingEncoding:encoding];
@@ -114,7 +137,10 @@ TT_FIX_CATEGORY_BUG(NSStringAdditions)
       } else if (kvPair.count == 2) {
         NSString* value = [[kvPair objectAtIndex:1]
                            stringByReplacingPercentEscapesUsingEncoding:encoding];
-        [values addObject:value];
+        if (value) {
+          // add by Tim Cao 2012/08/14, avoid nil value(wrong encoding) to be added to dictionary
+          [values addObject:value];
+        }
       }
     }
   }
