@@ -174,6 +174,10 @@ TT_FIX_CATEGORY_BUG(NSStringAdditions)
   for (NSString* key in [query keyEnumerator]) {
     NSParameterAssert([key respondsToSelector:@selector(urlEncoded)]);
     NSString* value = [query objectForKey:key];
+    if (!value || (id)value==[NSNull null]) {
+      // add by Tim Cao 2012/08/14, avoid exception
+      continue;
+    }
     NSParameterAssert([value respondsToSelector:@selector(urlEncoded)]);
     value = [value urlEncoded];
     key = [key urlEncoded];
