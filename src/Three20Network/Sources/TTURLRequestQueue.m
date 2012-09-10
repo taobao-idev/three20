@@ -334,7 +334,7 @@ static TTURLRequestQueue* gMainQueue = nil;
   _suspended = isSuspended;
 
   if (!_suspended) {
-    [self loadNextInQueue];
+    [self loadNextInQueueDelayed]; // modify by Tim Cao 2012/09/10, 修改为延迟加载，提升性能
 
   } else if (_loaderQueueTimer) {
     [_loaderQueueTimer invalidate];
