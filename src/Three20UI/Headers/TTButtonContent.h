@@ -35,6 +35,7 @@
   id<TTImageViewDelegate> _delegate;
 }
 
+@property (nonatomic, assign) TTButton* button;
 @property (nonatomic, copy)   NSString* title;
 @property (nonatomic, copy)   NSString* imageURL;
 @property (nonatomic, retain) UIImage*  image;

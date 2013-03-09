@@ -26,6 +26,7 @@
 #import "Three20Network/TTURLImageResponse.h"
 #import "Three20Network/TTURLCache.h"
 #import "Three20Network/TTURLRequest.h"
+#import "Three20Network/TTURLRequestQueue.h"
 
 // Core
 #import "Three20Core/TTCorePreprocessorMacros.h"
@@ -36,6 +37,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 @implementation TTButtonContent
 
+@synthesize button    = _button;
 @synthesize title     = _title;
 @synthesize imageURL  = _imageURL;
 @synthesize image     = _image;
@@ -47,7 +49,7 @@
 - (id)initWithButton:(TTButton*)button {
 	self = [super init];
   if (self) {
-    _button = button;
+    self.button = button;
   }
   return self;
 }
@@ -55,6 +57,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)dealloc {
+  [[TTURLRequestQueue mainQueue] cancelRequestsWithDelegate:self]; // Add by Tim, 2013/03/07
   [_request cancel];
   TT_RELEASE_SAFELY(_request);
   TT_RELEASE_SAFELY(_title);

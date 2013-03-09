@@ -62,6 +62,10 @@ static const CGFloat kVPadding = 7.0f;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)dealloc {
+  // 释放前将button content中的引用去掉(by Tim, 2013/03/07)
+  for (TTButtonContent* buttonContent in [_content allValues]) {
+    buttonContent.button = nil;
+  }
   TT_RELEASE_SAFELY(_content);
   TT_RELEASE_SAFELY(_font);
   self.imageDelegate = nil;
