@@ -77,13 +77,15 @@ TT_FIX_CATEGORY_BUG(NSStringAdditions)
     NSString* pairString = nil;
     [scanner scanUpToCharactersFromSet:delimiterSet intoString:&pairString];
     [scanner scanCharactersFromSet:delimiterSet intoString:NULL];
+      if (!pairString || [pairString length] == 0) {
+          continue;
+      }
 //    NSArray* kvPair = [pairString componentsSeparatedByString:@"="]; // modify by Tim Cao 2012/08/14, custom separator
       NSMutableArray* kvPair = [NSMutableArray array];
       int equalSignPosition = [pairString rangeOfString:@"="].location;
       if (equalSignPosition == NSNotFound) {
           [kvPair addObject:pairString];
-          
-      } else {
+      }else {
           [kvPair addObject:[pairString substringToIndex:equalSignPosition]];
           if (equalSignPosition != pairString.length-1)
               [kvPair addObject:[pairString substringFromIndex:equalSignPosition+1]];
@@ -112,6 +114,9 @@ TT_FIX_CATEGORY_BUG(NSStringAdditions)
     NSString* pairString = nil;
     [scanner scanUpToCharactersFromSet:delimiterSet intoString:&pairString];
     [scanner scanCharactersFromSet:delimiterSet intoString:NULL];
+      if (!pairString || [pairString length] == 0) {
+          continue;
+      }
 //    NSArray* kvPair = [pairString componentsSeparatedByString:@"="]; // modify by Tim Cao 2012/08/14, custom separator
       NSMutableArray* kvPair = [NSMutableArray array];
       int equalSignPosition = [pairString rangeOfString:@"="].location;
