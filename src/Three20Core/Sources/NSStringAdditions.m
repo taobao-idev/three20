@@ -95,7 +95,7 @@ TT_FIX_CATEGORY_BUG(NSStringAdditions)
                        stringByReplacingPercentEscapesUsingEncoding:encoding];
       NSString* value = [[kvPair objectAtIndex:1]
                          stringByReplacingPercentEscapesUsingEncoding:encoding];
-      if (value) {
+      if (key && value) {
         // add by Tim Cao 2012/08/14, avoid nil value(wrong encoding) to be added to dictionary
         [pairs setObject:value forKey:key];
       }
@@ -122,31 +122,32 @@ TT_FIX_CATEGORY_BUG(NSStringAdditions)
       int equalSignPosition = [pairString rangeOfString:@"="].location;
       if (equalSignPosition == NSNotFound) {
           [kvPair addObject:pairString];
-          
       } else {
           [kvPair addObject:[pairString substringToIndex:equalSignPosition]];
           if (equalSignPosition != pairString.length-1)
           [kvPair addObject:[pairString substringFromIndex:equalSignPosition+1]];
       }
     if (kvPair.count == 1 || kvPair.count == 2) {
-      NSString* key = [[kvPair objectAtIndex:0]
-                       stringByReplacingPercentEscapesUsingEncoding:encoding];
-      NSMutableArray* values = [pairs objectForKey:key];
-      if (nil == values) {
-        values = [NSMutableArray array];
-        [pairs setObject:values forKey:key];
-      }
-      if (kvPair.count == 1) {
-        [values addObject:[NSNull null]];
-
-      } else if (kvPair.count == 2) {
-        NSString* value = [[kvPair objectAtIndex:1]
-                           stringByReplacingPercentEscapesUsingEncoding:encoding];
-        if (value) {
-          // add by Tim Cao 2012/08/14, avoid nil value(wrong encoding) to be added to dictionary
-          [values addObject:value];
+        NSString* key = [[kvPair objectAtIndex:0] stringByReplacingPercentEscapesUsingEncoding:encoding];
+        if (key == nil) {
+            continue;
         }
-      }
+        NSMutableArray* values = [pairs objectForKey:key];
+        if (nil == values) {
+            values = [NSMutableArray array];
+            [pairs setObject:values forKey:key];
+        }
+        if (kvPair.count == 1) {
+            [values addObject:[NSNull null]];
+            
+        } else if (kvPair.count == 2) {
+            NSString* value = [[kvPair objectAtIndex:1]
+                               stringByReplacingPercentEscapesUsingEncoding:encoding];
+            if (value) {
+                // add by Tim Cao 2012/08/14, avoid nil value(wrong encoding) to be added to dictionary
+                [values addObject:value];
+            }
+        }
     }
   }
   return [NSDictionary dictionaryWithDictionary:pairs];
