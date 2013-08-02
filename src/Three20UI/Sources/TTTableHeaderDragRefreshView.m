@@ -161,9 +161,9 @@
   if (newDate) {
     if (_lastUpdatedDate != newDate) {
       [_lastUpdatedDate release];
+      _lastUpdatedDate = [newDate retain];
     }
 
-    _lastUpdatedDate = [newDate retain];
 
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateStyle:NSDateFormatterShortStyle];
