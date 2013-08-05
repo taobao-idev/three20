@@ -50,7 +50,8 @@
   TTDASSERT(nil == _data);
 
   if ([data isKindOfClass:[NSData class]]) {
-    _data = [data retain];
+      TT_RELEASE_SAFELY(_data);
+      _data = [data retain];
   }
 
   return nil;
