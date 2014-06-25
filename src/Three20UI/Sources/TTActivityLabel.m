@@ -21,9 +21,6 @@
 #import "Three20UI/TTButton.h"
 #import "Three20UI/UIViewAdditions.h"
 
-// UINavigator
-#import "Three20UINavigator/TTGlobalNavigatorMetrics.h"
-
 // Style
 #import "Three20Style/TTGlobalStyle.h"
 #import "Three20Style/TTDefaultStyleSheet.h"
@@ -224,7 +221,7 @@ static CGFloat kProgressMargin  = 6.0f;
     bezelHeight = self.height;
   }
 
-  CGFloat maxBevelWidth = TTScreenBounds().size.width - margin*2;
+  CGFloat maxBevelWidth = [UIScreen mainScreen].bounds.size.width - margin*2;
   if (bezelWidth > maxBevelWidth) {
     bezelWidth = maxBevelWidth;
     contentWidth = bezelWidth - (kSpacing + indicatorSize);

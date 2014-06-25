@@ -14,28 +14,14 @@
 // limitations under the License.
 //
 
-#import "Three20UINavigator/TTNavigatorViewController.h"
-
-@class TTTableViewController;
-@class TTSearchDisplayController;
+#import "Three20UICommon/TTBaseViewController.h"
 
 /**
  * A view controller with some useful additions.
  */
-@interface TTViewController : TTNavigatorViewController {
-@protected
-  TTSearchDisplayController* _searchController;
-}
+@interface TTViewController : TTBaseViewController {
 
-/**
- * A view controller used to display the contents of the search display controller.
- *
- * If you assign a view controller to this property, it will automatically create a search
- * display controller which you can access through this view controller's searchDisplaController
- * property.  You can then take the searchBar from that controller and add it to your views. The
- * search bar will then search the data source of the view controller that you assigned here.
- */
-@property (nonatomic, retain) TTTableViewController* searchViewController;
+}
 
 /**
  * Forcefully initiates garbage collection. You may call this in your didReceiveMemoryWarning

@@ -19,9 +19,6 @@
 // Core
 #import "Three20Core/TTCorePreprocessorMacros.h"
 
-// UINavigator
-#import "Three20UINavigator/TTGlobalNavigatorMetrics.h"
-
 // UICommon
 #import "Three20UICommon/TTGlobalUICommon.h"
 
@@ -456,7 +453,7 @@ TT_FIX_CATEGORY_BUG(UIViewAdditions)
 - (CGRect)frameWithKeyboardSubtracted:(CGFloat)plusHeight {
   CGRect frame = self.frame;
   if (TTIsKeyboardVisible()) {
-    CGRect screenFrame = TTScreenBounds();
+    CGRect screenFrame = [UIScreen mainScreen].bounds;
     CGFloat keyboardTop = (screenFrame.size.height - (TTKeyboardHeight() + plusHeight));
     CGFloat screenBottom = self.ttScreenY + frame.size.height;
     CGFloat diff = screenBottom - keyboardTop;
@@ -470,7 +467,7 @@ TT_FIX_CATEGORY_BUG(UIViewAdditions)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (NSDictionary *)userInfoForKeyboardNotification {
-  CGRect screenFrame = TTScreenBounds();
+  CGRect screenFrame = [UIScreen mainScreen].bounds;
   CGRect bounds = CGRectMake(0, 0, screenFrame.size.width, self.height);
   CGPoint centerBegin = CGPointMake(floor(screenFrame.size.width/2 - self.width/2),
                                     screenFrame.size.height + floor(self.height/2));
@@ -546,6 +543,7 @@ TT_FIX_CATEGORY_BUG(UIViewAdditions)
     [self dismissAsKeyboardAnimationDidStop];
   }
 }
+
 
 
 @end

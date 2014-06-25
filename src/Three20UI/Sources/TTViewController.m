@@ -16,17 +16,9 @@
 
 #import "Three20UI/TTViewController.h"
 
-// UI
-#import "Three20UI/TTNavigator.h"
-#import "Three20UI/TTTableViewController.h"
-#import "Three20UI/TTSearchDisplayController.h"
-
-// UINavigator
-#import "Three20UINavigator/TTGlobalNavigatorMetrics.h"
-#import "Three20UINavigator/UIViewController+TTNavigator.h"
-
 // UICommon
 #import "Three20UICommon/TTGlobalUICommon.h"
+#import "Three20UICommon/TTGlobalNavigatorMetrics.h"
 #import "Three20UICommon/UIViewControllerAdditions.h"
 
 // Style
@@ -101,7 +93,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)viewDidUnload {
   [super viewDidUnload];
-  TT_RELEASE_SAFELY(_searchController);
 }
 
 
@@ -126,37 +117,8 @@
 #pragma mark -
 #pragma mark Public
 
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-- (TTTableViewController*)searchViewController {
-  return _searchController.searchResultsViewController;
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-- (void)setSearchViewController:(TTTableViewController*)searchViewController {
-  if (searchViewController) {
-    if (nil == _searchController) {
-      UISearchBar* searchBar = [[[UISearchBar alloc] init] autorelease];
-      [searchBar sizeToFit];
-
-      _searchController = [[TTSearchDisplayController alloc] initWithSearchBar:searchBar
-                                                             contentsController:self];
-    }
-
-    searchViewController.superController = self;
-    _searchController.searchResultsViewController = searchViewController;
-
-  } else {
-    _searchController.searchResultsViewController = nil;
-    TT_RELEASE_SAFELY(_searchController);
-  }
-}
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 + (void)doGarbageCollection {
-  [UIViewController doNavigatorGarbageCollection];
   [UIViewController doCommonGarbageCollection];
 }
 
