@@ -37,6 +37,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)initWithFrame:(CGRect)frame {
 	self = [super initWithFrame:frame];
+    self.backgroundColor = [UIColor clearColor];
   if (self) {
     self.contentMode = UIViewContentModeRedraw;
   }
